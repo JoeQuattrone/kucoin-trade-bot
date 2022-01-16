@@ -1,10 +1,10 @@
-package app.cryptttrone;
+package kucoin.bot;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class CrypttroneAppApplicationTests {
+class ApplicationTests {
 
   @Test
   void contextLoads() {}

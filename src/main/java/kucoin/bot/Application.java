@@ -1,4 +1,4 @@
-package app.cryptttrone;
+package kucoin.bot;
 
 import java.util.Arrays;
 import org.springframework.boot.CommandLineRunner;
@@ -8,10 +8,10 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 
 @SpringBootApplication
-public class CrypttroneAppApplication {
+public class Application {
 
   public static void main(String[] args) {
-    SpringApplication.run(CrypttroneAppApplication.class, args);
+    SpringApplication.run(Application.class, args);
   }
 
   @Bean

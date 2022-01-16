@@ -1,4 +1,4 @@
-package app.cryptttrone.order;
+package kucoin.bot.order;
 
 import java.io.IOException;
 import lombok.RequiredArgsConstructor;
