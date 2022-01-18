@@ -1,6 +1,8 @@
 package kucoin.bot;
 
-import kucoin.bot.order.BuySell;
+import com.kucoin.sdk.rest.response.SymbolResponse;
+import java.util.List;
+import kucoin.bot.order.KucoinApi;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -19,8 +21,13 @@ public class Application {
     return args -> {
       System.out.println("Let's inspect the beans provided by Spring Boot:");
 
-      final BuySell buySell = (BuySell) ctx.getBean("buySell");
-      buySell.getCandlestick();
+      //      final BuySell buySell = (BuySell) ctx.getBean("buySell");
+      //      buySell.getCandlestick();
+
+      final KucoinApi kucoinApi = (KucoinApi) ctx.getBean("kucoinApi");
+      List<SymbolResponse> res = kucoinApi.getAllSymbols();
+
+      System.out.println(res);
     };
   }
 }
