@@ -11,7 +11,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 import java.util.stream.Collectors;
-
 import kucoin.bot.CurrencyPair;
 import kucoin.bot.KlineInterval;
 import org.springframework.stereotype.Component;
@@ -47,12 +46,13 @@ public class KucoinApi {
   }
 
   public List<Kline> getHistoricRates(
-          final CurrencyPair pair, final Long startAt, final Long endAt, final KlineInterval interval) {
+      final CurrencyPair pair, final Long startAt, final Long endAt, final KlineInterval interval) {
 
     final List<Kline> rates = new ArrayList<>();
     try {
       rates.addAll(
-          client.historyAPI().getHistoricRates(pair.getValue(), startAt, endAt, interval.getValue()).stream()
+          client.historyAPI().getHistoricRates(pair.getValue(), startAt, endAt, interval.getValue())
+              .stream()
               .map(Kline::new)
               .collect(Collectors.toList()));
       return rates;

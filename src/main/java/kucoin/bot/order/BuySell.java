@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 
 @RequiredArgsConstructor
 @Component
-public class  BuySell {
+public class BuySell {
   private final KucoinApi kucoinApi;
 
   public void getCandlestick() throws IOException {

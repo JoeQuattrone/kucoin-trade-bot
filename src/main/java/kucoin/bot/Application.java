@@ -17,7 +17,7 @@ public class Application {
 
   @Bean
   // runs every hour
-  @Scheduled(cron ="0 0 0/1 1/1 * ?")
+  @Scheduled(cron = "0 0 0/1 1/1 * ?")
   public CommandLineRunner root(ApplicationContext ctx) {
     return args -> {
       tradeBtc(ctx);
