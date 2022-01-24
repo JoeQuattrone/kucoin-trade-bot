@@ -1,5 +1,6 @@
 package kucoin.bot;
 
+import java.util.Arrays;
 import kucoin.bot.strategies.EmaAndRsiCrossover;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -25,6 +26,7 @@ public class Application {
   }
 
   private void tradeBtc(ApplicationContext ctx) {
+    System.out.println(Arrays.toString(ctx.getBeanDefinitionNames()));
     final EmaAndRsiCrossover strategy = (EmaAndRsiCrossover) ctx.getBean("emaAndRsiCrossover");
     strategy.run(CurrencyPair.BTC);
   }

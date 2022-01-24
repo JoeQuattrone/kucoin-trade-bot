@@ -21,23 +21,25 @@ public class KucoinApi {
 
   static {
     Properties prop = new Properties();
-    String fileName = "credentials.txt";
+    final String fileName = "credentials.txt";
 
     try (FileInputStream fis = new FileInputStream(fileName)) {
       prop.load(fis);
     } catch (FileNotFoundException ex) {
-      out.printf("File not found %n", ex);
+      out.printf("File not found %s", ex.getMessage());
+      System.exit(0);
     } catch (IOException ex) {
-      out.println(ex);
+      out.println(ex.getMessage());
+      System.exit(0);
     }
 
-    final String passphrase = prop.getProperty("app.PASSPHRASE");
+    final String passphrase = prop.getProperty("PASSPHRASE");
     out.println(passphrase);
 
     client =
         new KucoinClientBuilder()
             .withBaseUrl("https://openapi-v2.kucoin.com")
-            .withApiKey(prop.getProperty("app.API_KEY"), prop.getProperty("app.SECRET"), passphrase)
+            .withApiKey(prop.getProperty("API_KEY"), prop.getProperty("SECRET"), passphrase)
             .buildRestClient();
   }
 
@@ -55,6 +57,8 @@ public class KucoinApi {
               .stream()
               .map(Kline::new)
               .collect(Collectors.toList()));
+
+      System.out.printf("Klines: %s", rates);
       return rates;
     } catch (IOException ex) {
       System.out.println(ex);

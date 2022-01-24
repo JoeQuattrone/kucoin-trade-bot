@@ -1,8 +1,6 @@
 package kucoin.bot.order;
 
 import java.io.IOException;
-import java.util.List;
-import kucoin.bot.KlineInterval;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -11,13 +9,8 @@ import org.springframework.stereotype.Component;
 public class BuySell {
   private final KucoinApi kucoinApi;
 
-  public void getCandlestick() throws IOException {
-    final List<Kline> rates =
-        kucoinApi.getHistoricRates("BTC-USDT", 1641070569L, 1642280169L, KlineInterval.ONE_DAY);
+  // create buy order to buy based off portfolio percentage
+  public void getCandlestick() throws IOException {}
 
-    rates.forEach(
-        rate -> {
-          System.out.println(rate);
-        });
-  }
+  // create sell order to sell entire position of a coin
 }

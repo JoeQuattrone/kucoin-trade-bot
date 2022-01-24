@@ -22,6 +22,7 @@ public class EMA {
 
   private void init(List<Double> closingPrices) {
     currentEMA = calculate(closingPrices);
+    System.out.printf("Period: %s, Ema: %s", period, currentEMA);
   }
 
   // assumes the prices are in order of most recent

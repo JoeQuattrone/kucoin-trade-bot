@@ -1,7 +1,5 @@
 package kucoin.bot;
 
-import java.util.Arrays;
-import java.util.List;
 import lombok.Getter;
 
 public enum CurrencyPair {
@@ -15,8 +13,9 @@ public enum CurrencyPair {
 
   @Getter private final String value;
 
-  @Getter
-  private final List<CurrencyPair> all = Arrays.asList(this.getDeclaringClass().getEnumConstants());
+  //  @Getter
+  //  private final List<CurrencyPair> all =
+  // Arrays.asList(this.getDeclaringClass().getEnumConstants());
 
   CurrencyPair(String value) {
     this.value = value;

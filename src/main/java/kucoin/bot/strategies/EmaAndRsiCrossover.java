@@ -12,11 +12,11 @@ import kucoin.bot.order.KucoinApi;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
-@Component
+@Component("emaAndRsiCrossover")
 @RequiredArgsConstructor
 public class EmaAndRsiCrossover {
 
-  private KucoinApi kucoinApi;
+  private final KucoinApi kucoinApi;
   private static final int ema14Period = 14;
   private static final int ema20Period = 20;
 
@@ -29,7 +29,6 @@ public class EmaAndRsiCrossover {
     // calculate values
     final EMA ema14 = new EMA(fourteenDayPrices, 14);
     final EMA ema20 = new EMA(twentyDayPrices, ema20Period);
-
 
     // execute buy or sell order based on values
   }
