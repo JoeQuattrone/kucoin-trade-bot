@@ -42,11 +42,14 @@ public class EmaAndRsiCrossover {
     return false;
   }
 
+  // queries from yesterdays closing time to # of daysAgo
   private List<Kline> queryKlines(final int daysAgo) {
     LocalDate today = LocalDate.now(ZoneId.of("UTC"));
     LocalDate startDate = today.minusDays(daysAgo);
+    long todayTimestamp = today.atStartOfDay(ZoneId.of("UTC")).toEpochSecond();
+    long startingTimestamp = startDate.atStartOfDay(ZoneId.of("UTC")).toEpochSecond();
 
     return kucoinApi.getHistoricRates(
-        CurrencyPair.BTC, today.toEpochDay(), startDate.toEpochDay(), KlineInterval.ONE_DAY);
+        CurrencyPair.BTC, startingTimestamp, todayTimestamp, KlineInterval.ONE_DAY);
   }
 }

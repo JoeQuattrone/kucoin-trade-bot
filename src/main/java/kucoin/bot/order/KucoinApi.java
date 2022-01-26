@@ -8,6 +8,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Properties;
 import java.util.stream.Collectors;
@@ -50,28 +51,24 @@ public class KucoinApi {
   public List<Kline> getHistoricRates(
       final CurrencyPair pair, final Long startAt, final Long endAt, final KlineInterval interval) {
 
-    final List<Kline> rates = new ArrayList<>();
+    final List<Kline> klines = new ArrayList<>();
     try {
-      rates.addAll(
+
+      System.out.printf(
+          "pair: %s, start time: %s, end time: %s, interval: %s",
+          pair.getValue(), startAt, endAt, interval.getValue());
+
+      klines.addAll(
           client.historyAPI().getHistoricRates(pair.getValue(), startAt, endAt, interval.getValue())
               .stream()
               .map(Kline::new)
               .collect(Collectors.toList()));
 
-      System.out.printf("Klines: %s", rates);
-      return rates;
-    } catch (IOException ex) {
-      System.out.println(ex);
-      throw ex;
-    } finally {
-      return rates;
+      System.out.printf("Klines returned: %s", klines.size());
+    } catch (Exception ex) {
+      System.out.println(Arrays.toString(ex.getStackTrace()));
+      System.exit(0);
     }
+    return klines;
   }
-
-  //  public List<SymbolResponse> getAllSymbols() throws IOException {
-  //    return client.symbolAPI().getSymbols();
-  //  }
-
-  //   1min, 3min, 5min, 15min, 30min, 1hour, 2hour, 4hour, 6hour, 8hour, 12hour, 1day, 1week
-
 }
