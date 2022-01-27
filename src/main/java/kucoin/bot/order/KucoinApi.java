@@ -53,10 +53,10 @@ public class KucoinApi {
 
     final List<Kline> klines = new ArrayList<>();
     try {
-
-      System.out.printf(
-          "pair: %s, start time: %s, end time: %s, interval: %s",
-          pair.getValue(), startAt, endAt, interval.getValue());
+      System.out.println(
+          String.format(
+              "pair: %s, start time: %s, end time: %s, interval: %s",
+              pair.getValue(), startAt, endAt, interval.getValue()));
 
       klines.addAll(
           client.historyAPI().getHistoricRates(pair.getValue(), startAt, endAt, interval.getValue())
@@ -64,7 +64,7 @@ public class KucoinApi {
               .map(Kline::new)
               .collect(Collectors.toList()));
 
-      System.out.printf("Klines returned: %s", klines.size());
+      System.out.println("Klines returned: " + klines.size());
     } catch (Exception ex) {
       System.out.println(Arrays.toString(ex.getStackTrace()));
       System.exit(0);

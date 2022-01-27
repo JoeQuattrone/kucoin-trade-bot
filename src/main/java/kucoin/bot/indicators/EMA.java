@@ -27,13 +27,16 @@ public class EMA {
 
   // assumes the prices are in order of most recent
   private double calculate(final List<Double> closingPrices) {
+    System.out.println("calculating ema for period: " + period);
     final double sumClosingPrices = closingPrices.stream().reduce(0.0, Double::sum);
-    final double sma = sumClosingPrices / period;
-    final double oldestPrice = closingPrices.get(closingPrices.size() - 1);
+    final double sma = sumClosingPrices / period; // correct up to this point
+    final double oldestPrice =
+        closingPrices.get(closingPrices.size() - 1); // 43067.3 which is correct
 
     double ema = calculateEMA(multiplier, oldestPrice, sma);
 
-    for (int i = 1; i < closingPrices.size(); i++) {
+    for (int i = closingPrices.size() - 2; i >= 0; i--) {
+      System.out.println(closingPrices.get(i));
       ema = calculateEMA(multiplier, closingPrices.get(i), ema);
     }
     return ema;
@@ -41,6 +44,7 @@ public class EMA {
 
   private double calculateEMA(
       final double multiplier, final double currentPrice, final double previousEma) {
+    // EMA = (Close - EMA(previousBar)) * multiplier + EMA(previousBar)
     return multiplier * (currentPrice - previousEma) + previousEma;
   }
 }
