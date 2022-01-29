@@ -24,7 +24,7 @@ public class EmaAndRsiCrossover {
     // get prices
     final List<Double> twentyDayPrices =
         queryKlines(ema20Period).stream().map(Kline::getClose).collect(Collectors.toList());
-    final List<Double> thirteenDayPrices = twentyDayPrices.subList(0, 13);
+    final List<Double> thirteenDayPrices = twentyDayPrices.subList(0, 14);
 
     twentyDayPrices.forEach(System.out::println);
 
