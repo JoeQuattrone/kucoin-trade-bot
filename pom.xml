@@ -43,6 +43,15 @@
 			<artifactId>kucoin-java-sdk</artifactId>
 			<version>2.0.0</version>
 		</dependency>
+<!--	mysql dependencies	-->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-data-jpa</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+		</dependency>
 	</dependencies>
 
 	<build>

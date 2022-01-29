@@ -2,9 +2,22 @@ package kucoin.bot.order;
 
 import java.util.List;
 import lombok.Data;
+import lombok.Getter;
+import lombok.ToString;
 
-@Data
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+
+@Getter
+@ToString
+@Entity
 public class Kline {
+
+  @Id
+  @GeneratedValue(strategy = GenerationType.AUTO)
+  private int id;
 
   private final Long time; // Start time of the candle cycle
   private final double open; // Opening price
