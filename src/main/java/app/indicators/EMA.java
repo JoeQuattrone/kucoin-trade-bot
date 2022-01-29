@@ -1,4 +1,4 @@
-package kucoin.bot.indicators;
+package app.indicators;
 
 import java.util.List;
 

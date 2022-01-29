@@ -1,7 +1,10 @@
-package kucoin.bot.order;
+package app.order;
 
 import static java.lang.System.out;
 
+import app.currency.CurrencyPair;
+import app.kline.Kline;
+import app.kline.KlineInterval;
 import com.kucoin.sdk.KucoinClientBuilder;
 import com.kucoin.sdk.KucoinRestClient;
 import java.io.FileInputStream;
@@ -12,9 +15,6 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Properties;
 import java.util.stream.Collectors;
-import kucoin.bot.CurrencyPair;
-import kucoin.bot.kline.Kline;
-import kucoin.bot.kline.KlineInterval;
 import org.springframework.stereotype.Component;
 
 @Component

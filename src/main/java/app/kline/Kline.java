@@ -1,8 +1,8 @@
-package kucoin.bot.kline;
+package app.kline;
 
+import app.currency.CurrencyPair;
 import java.util.List;
 import javax.persistence.*;
-import kucoin.bot.CurrencyPair;
 import lombok.Getter;
 import lombok.ToString;
 
@@ -12,7 +12,7 @@ import lombok.ToString;
 public class Kline {
 
   @Id
-  @GeneratedValue(strategy = GenerationType.AUTO)
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
   private int id;
 
   @Enumerated(EnumType.ORDINAL)

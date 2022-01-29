@@ -1,14 +1,14 @@
-package kucoin.bot.strategies;
+package app.strategies;
 
+import app.currency.CurrencyPair;
+import app.indicators.EMA;
+import app.kline.Kline;
+import app.kline.KlineInterval;
+import app.migrations.SeedKline;
+import app.order.KucoinApi;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.List;
-import java.util.stream.Collectors;
-import kucoin.bot.CurrencyPair;
-import kucoin.bot.indicators.EMA;
-import kucoin.bot.kline.Kline;
-import kucoin.bot.kline.KlineInterval;
-import kucoin.bot.order.KucoinApi;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -19,17 +19,21 @@ public class EmaAndRsiCrossover {
   private final KucoinApi kucoinApi;
   private static final int ema13Period = 13;
   private static final int ema20Period = 20;
+  private final SeedKline seedKline;
 
   public void run(final CurrencyPair targetCoin) {
+    // temporary
+    seedKline.run();
+
     // get prices
-    final List<Double> twentyDayPrices =
-        queryKlines(ema20Period).stream().map(Kline::getClose).collect(Collectors.toList());
-    final List<Double> thirteenDayPrices = twentyDayPrices.subList(0, 14);
-
-    twentyDayPrices.forEach(System.out::println);
-
-    // calculate values
-    final EMA ema13 = new EMA(thirteenDayPrices, ema13Period);
+    //    final List<Double> twentyDayPrices =
+    //        queryKlines(ema20Period).stream().map(Kline::getClose).collect(Collectors.toList());
+    //    final List<Double> thirteenDayPrices = twentyDayPrices.subList(0, 14);
+    //
+    //    twentyDayPrices.forEach(System.out::println);
+    //
+    //    // calculate values
+    //    final EMA ema13 = new EMA(thirteenDayPrices, ema13Period);
     // final EMA ema20 = new EMA(twentyDayPrices, ema20Period);
 
     // execute buy or sell order based on values
@@ -54,18 +58,5 @@ public class EmaAndRsiCrossover {
 
     return kucoinApi.getHistoricRates(
         CurrencyPair.BTC, startingTimestamp, todayTimestamp, KlineInterval.ONE_DAY);
-  }
-
-  public void seedDb() {
-    LocalDate today = LocalDate.now(ZoneId.of("UTC"));
-    // add an extra day to calculate the initial EMA
-    LocalDate startDate = today.minusDays(700);
-    long todayTimestamp = today.atStartOfDay(ZoneId.of("UTC")).toEpochSecond();
-    long startingTimestamp = startDate.atStartOfDay(ZoneId.of("UTC")).toEpochSecond();
-
-    final List<Kline> klines =  kucoinApi.getHistoricRates(
-            CurrencyPair.BTC, startingTimestamp, todayTimestamp, KlineInterval.ONE_DAY);
-
-
   }
 }

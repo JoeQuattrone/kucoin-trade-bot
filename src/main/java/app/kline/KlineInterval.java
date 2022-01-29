@@ -1,4 +1,4 @@
-package kucoin.bot.kline;
+package app.kline;
 
 import lombok.Getter;
 

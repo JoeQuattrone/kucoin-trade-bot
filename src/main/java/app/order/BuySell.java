@@ -1,4 +1,4 @@
-package kucoin.bot.order;
+package app.order;
 
 import java.io.IOException;
 import lombok.RequiredArgsConstructor;

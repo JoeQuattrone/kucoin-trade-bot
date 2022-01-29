@@ -1,6 +1,7 @@
-package kucoin.bot;
+package app;
 
-import kucoin.bot.strategies.EmaAndRsiCrossover;
+import app.currency.CurrencyPair;
+import app.strategies.EmaAndRsiCrossover;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

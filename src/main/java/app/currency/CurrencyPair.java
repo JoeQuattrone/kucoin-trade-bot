@@ -1,4 +1,4 @@
-package kucoin.bot;
+package app.currency;
 
 import lombok.Getter;
 
@@ -12,10 +12,6 @@ public enum CurrencyPair {
   TRON("TRX-USDT");
 
   @Getter private final String value;
-
-  //  @Getter
-  //  private final List<CurrencyPair> all =
-  // Arrays.asList(this.getDeclaringClass().getEnumConstants());
 
   CurrencyPair(String value) {
     this.value = value;
