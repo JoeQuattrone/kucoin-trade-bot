@@ -62,7 +62,7 @@ public class KucoinApi {
       klines.addAll(
           client.historyAPI().getHistoricRates(pair.getValue(), startAt, endAt, interval.getValue())
               .stream()
-              .map(Kline::new)
+              .map(res -> new Kline(interval, pair, res))
               .collect(Collectors.toList()));
 
       System.out.println("Klines returned: " + klines.size());

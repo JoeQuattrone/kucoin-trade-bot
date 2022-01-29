@@ -5,9 +5,9 @@ import java.time.ZoneId;
 import java.util.List;
 import java.util.stream.Collectors;
 import kucoin.bot.CurrencyPair;
-import kucoin.bot.kline.KlineInterval;
 import kucoin.bot.indicators.EMA;
 import kucoin.bot.kline.Kline;
+import kucoin.bot.kline.KlineInterval;
 import kucoin.bot.order.KucoinApi;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -54,5 +54,18 @@ public class EmaAndRsiCrossover {
 
     return kucoinApi.getHistoricRates(
         CurrencyPair.BTC, startingTimestamp, todayTimestamp, KlineInterval.ONE_DAY);
+  }
+
+  public void seedDb() {
+    LocalDate today = LocalDate.now(ZoneId.of("UTC"));
+    // add an extra day to calculate the initial EMA
+    LocalDate startDate = today.minusDays(700);
+    long todayTimestamp = today.atStartOfDay(ZoneId.of("UTC")).toEpochSecond();
+    long startingTimestamp = startDate.atStartOfDay(ZoneId.of("UTC")).toEpochSecond();
+
+    final List<Kline> klines =  kucoinApi.getHistoricRates(
+            CurrencyPair.BTC, startingTimestamp, todayTimestamp, KlineInterval.ONE_DAY);
+
+
   }
 }
