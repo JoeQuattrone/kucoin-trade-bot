@@ -1,4 +1,4 @@
-package kucoin.bot.order;
+package kucoin.bot.kline;
 
 import java.util.List;
 import javax.persistence.Entity;

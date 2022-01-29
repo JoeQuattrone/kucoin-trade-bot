@@ -13,7 +13,8 @@ import java.util.List;
 import java.util.Properties;
 import java.util.stream.Collectors;
 import kucoin.bot.CurrencyPair;
-import kucoin.bot.KlineInterval;
+import kucoin.bot.kline.Kline;
+import kucoin.bot.kline.KlineInterval;
 import org.springframework.stereotype.Component;
 
 @Component

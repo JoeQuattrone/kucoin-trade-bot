@@ -1,8 +1,8 @@
-package kucoin.bot.repositories;
+package kucoin.bot.kline;
 
 import java.util.List;
 import java.util.Optional;
-import kucoin.bot.order.Kline;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
