@@ -4,6 +4,7 @@ import app.currency.CurrencyPair;
 import java.util.List;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 /** Stores and Retrieves klines from database */
@@ -22,6 +23,6 @@ public class KlineService {
   }
 
   public List<Double> findAllByCurrencyOrdinal(CurrencyPair currency) {
-    return klineDao.findAllByCurrencyOrdinal(currency);
+    return klineDao.findAllByCurrencyOrdinal(currency, Sort.by("time").descending());
   }
 }

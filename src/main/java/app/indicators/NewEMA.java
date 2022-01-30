@@ -21,6 +21,7 @@ public class NewEMA {
     this.closingPrices = closingPrices;
 
     System.out.println("(EMA) closing prices returned: " + closingPrices.size());
+    calculateEmas(periods);
 
     return this;
   }
@@ -39,7 +40,7 @@ public class NewEMA {
     // uses the oldest sma for the first ema
     final double sumClosingPrices =
         closingPrices.subList(1, closingPrices.size()).stream().reduce(0.0, Double::sum);
-    final double sma = sumClosingPrices / period; // correct up to this point
+    final double sma = sumClosingPrices / period;
     final double currentPrice = closingPrices.get(0);
 
     double ema = calculateEMA(multiplier, currentPrice, sma);
