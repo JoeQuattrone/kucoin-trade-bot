@@ -2,6 +2,8 @@ package app.indicators;
 
 import app.currency.CurrencyPair;
 import app.kline.KlineService;
+
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import lombok.RequiredArgsConstructor;
@@ -11,7 +13,7 @@ public class NewEMA {
   private CurrencyPair currency;
   private List<Double> closingPrices;
   /** Map of period to ema */
-  private Map<Integer, Double> emaByPeriod;
+  private Map<Integer, Double> emaByPeriod = new HashMap<>();
 
   private final KlineService klineService;
 
@@ -26,7 +28,7 @@ public class NewEMA {
     return this;
   }
 
-  final Map<Integer, Double> getEmaByPeriod() {
+  public Map<Integer, Double> getEmas() {
     return emaByPeriod;
   }
 
@@ -39,11 +41,15 @@ public class NewEMA {
     final double multiplier = 2.0 / (double) (period + 1);
     // uses the oldest sma for the first ema
     final double sumClosingPrices =
-        closingPrices.subList(1, closingPrices.size()).stream().reduce(0.0, Double::sum);
+        closingPrices.subList(closingPrices.size() - period, closingPrices.size()).stream().reduce(0.0, Double::sum);
     final double sma = sumClosingPrices / period;
     final double currentPrice = closingPrices.get(0);
 
     double ema = calculateEMA(multiplier, currentPrice, sma);
+
+    for(int i = closingPrices.size() - period -1; i >= 0; i--) {
+      ema = calculateEMA(multiplier, closingPrices.get(i), ema);
+    }
 
     System.out.println(String.format("sma: %s, ema: %s", sma, ema));
 

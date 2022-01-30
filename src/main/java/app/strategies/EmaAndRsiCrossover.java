@@ -28,17 +28,7 @@ public class EmaAndRsiCrossover {
     final NewEMA ema =
         new NewEMA(klineService).init(currency, Arrays.asList(ema13Period, ema20Period));
 
-    // get prices
-    //    final List<Double> twentyDayPrices =
-    //        queryKlines(currency,
-    // ema20Period).stream().map(Kline::getClose).collect(Collectors.toList());
-    //    final List<Double> thirteenDayPrices = twentyDayPrices.subList(0, 14);
-    //
-    //    twentyDayPrices.forEach(System.out::println);
-    //
-    //    // calculate values
-    //    final EMA ema13 = new EMA(thirteenDayPrices, ema13Period);
-    //    final EMA ema20 = new EMA(twentyDayPrices, ema20Period);
+    ema.getEmas();
 
     // execute buy or sell order based on values
   }
