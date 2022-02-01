@@ -1,43 +1,57 @@
 package app.indicators;
 
+import app.currency.CurrencyPair;
+import app.kline.KlineService;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 
-/** EXPONENTIAL MOVING AVERAGE */
+@Getter
+@RequiredArgsConstructor
 public class EMA {
+  private CurrencyPair currency;
+  private List<Double> closingPrices;
+  /** Map of period to ema */
+  private Map<Integer, Double> emaByPeriod = new HashMap<>();
 
-  private double currentEMA;
-  private final int period;
-  private final double multiplier;
+  private final KlineService klineService;
 
-  public EMA(List<Double> closingPrices, int period) {
-    currentEMA = 0;
-    this.period = period;
-    this.multiplier = 2.0 / (double) (period + 1);
-    init(closingPrices);
+  public EMA init(final CurrencyPair currency, final List<Integer> periods) {
+    this.currency = currency;
+    final List<Double> closingPrices = klineService.findAllByCurrencyOrdinal(currency);
+    this.closingPrices = closingPrices;
+
+    System.out.println("(EMA) closing prices returned: " + closingPrices.size());
+    calculateEmas(periods);
+
+    return this;
   }
 
-  public double get() {
-    return currentEMA;
+  private void calculateEmas(final List<Integer> periods) {
+    periods.forEach(this::calculate);
   }
 
-  private void init(List<Double> closingPrices) {
-    currentEMA = calculate(closingPrices);
-    System.out.printf("Period: %s, Ema: %s", period, currentEMA);
-  }
-
-  // assumes the prices are in order of most recent
-  private double calculate(final List<Double> closingPrices) {
+  private void calculate(final Integer period) {
     System.out.println("calculating ema for period: " + period);
-    // calculate sma for the previous 20 days. Exclude the latest price.
+    final double multiplier = 2.0 / (double) (period + 1);
+    // uses the oldest sma for the first ema
     final double sumClosingPrices =
-        closingPrices.subList(1, closingPrices.size()).stream().reduce(0.0, Double::sum);
-    final double sma = sumClosingPrices / period; // correct up to this point
+        closingPrices.subList(closingPrices.size() - period, closingPrices.size()).stream()
+            .reduce(0.0, Double::sum);
+    final double sma = sumClosingPrices / period;
     final double currentPrice = closingPrices.get(0);
 
     double ema = calculateEMA(multiplier, currentPrice, sma);
 
+    for (int i = closingPrices.size() - period - 1; i >= 0; i--) {
+      ema = calculateEMA(multiplier, closingPrices.get(i), ema);
+    }
+
     System.out.println(String.format("sma: %s, ema: %s", sma, ema));
-    return ema;
+
+    emaByPeriod.put(period, ema);
   }
 
   private double calculateEMA(

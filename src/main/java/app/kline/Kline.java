@@ -4,12 +4,14 @@ import app.currency.CurrencyPair;
 import java.util.List;
 import javax.persistence.*;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 @Getter
 @ToString
 @Entity(name = "Kline")
 @Table(name = "kline")
+@NoArgsConstructor
 public class Kline {
 
   @Id
@@ -18,32 +20,32 @@ public class Kline {
 
   @Enumerated(EnumType.ORDINAL)
   @Column(name = "period", nullable = false)
-  private final KlineInterval interval;
+  private KlineInterval interval;
 
   @Enumerated(EnumType.ORDINAL)
   @Column(nullable = false)
-  private final CurrencyPair currency;
+  private CurrencyPair currency;
 
   @Column(unique = true, nullable = false)
-  private final Long time; // Start time of the candle cycle
+  private Long time; // Start time of the candle cycle
 
   @Column(nullable = false)
-  private final double open; // Opening price
+  private double open; // Opening price
 
   @Column(nullable = false)
-  private final double close; // Closing price
+  private double close; // Closing price
 
   @Column(nullable = false)
-  private final double high; // Highest price
+  private double high; // Highest price
 
   @Column(nullable = false)
-  private final double low; // Lowest price
+  private double low; // Lowest price
 
   @Column(nullable = false)
-  private final String volume; // Transaction volume
+  private String volume; // Transaction volume
 
   @Column(nullable = false)
-  private final String turnover; // Transaction amount
+  private String turnover; // Transaction amount
 
   public Kline(
       final KlineInterval interval, final CurrencyPair currency, final List<String> apiResponse) {
