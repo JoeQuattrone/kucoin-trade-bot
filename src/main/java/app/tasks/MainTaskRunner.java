@@ -15,14 +15,14 @@ import org.springframework.stereotype.Component;
 
 @RequiredArgsConstructor
 // needed for scheduled task
-@Component
+@Component("mainTaskRunner")
 public class MainTaskRunner {
   private final KucoinApi kucoinApi;
   private final KlineService klineService;
 
   // every morning at 1am UTC
   @Scheduled(cron = "0 0 1 * * *", zone = "UTC")
-  private void updateLatestKline() {
+  public void getLatestPrices() {
     final Kline latestStoredKline = klineService.findLatestKline();
     System.out.println("Latest stored kline: " + latestStoredKline);
 

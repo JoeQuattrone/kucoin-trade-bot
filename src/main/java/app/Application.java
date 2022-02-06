@@ -2,6 +2,7 @@ package app;
 
 import app.currency.CurrencyPair;
 import app.strategies.EmaAndRsiCrossover;
+import app.tasks.MainTaskRunner;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -20,15 +21,16 @@ public class Application {
   @Bean
   public CommandLineRunner root(ApplicationContext ctx) {
     return args -> {
-      tradeBtc(ctx);
+      init(ctx);
     };
   }
 
   // Every morning at 2am
-  //  @Scheduled(cron = "0 2 * * *", zone = "UTC")  encountered invalid @Scheduled method
   // 'tradeBtc': Only no-arg methods may be annotated with @Scheduled
-  private void tradeBtc(ApplicationContext ctx) {
+  private void init(ApplicationContext ctx) {
     final EmaAndRsiCrossover strategy = (EmaAndRsiCrossover) ctx.getBean("emaAndRsiCrossover");
+    final MainTaskRunner taskRunner = (MainTaskRunner) ctx.getBean("mainTaskRunner");
+    taskRunner.getLatestPrices();
     strategy.run(CurrencyPair.BTC);
   }
 }
